@@ -98,13 +98,19 @@ class SearchContent extends React.Component {
         filterData.push(item)
       }
     });
+    if(filterData.length<1){
+      this.setState({
+        count: 0
+      })
+    }
     this.setState({ pokemons: filterData })
   }
 
   Next() {
     const { next } = this.state;
     const { limit, offset } = parseIdFromUrl(next);
-
+    const srule = getUrlParameter(this.props.location.search,'srule',false)
+    const searchTerm = getUrlParameter(this.props.location.search,'searchTerm',false)
     fetchData(limit, offset).then(data => {
       this.setState({
         pokemons: data.pokemons,
@@ -112,10 +118,22 @@ class SearchContent extends React.Component {
         prev: data.previous,
         count: data.count
       })
+    }).then(() => {
+      if(searchTerm){
+        this.updateDataOnSearch(searchTerm)
+      }
+      if(srule){
+        this.updateDataOnSort(srule);
+      }
     });
   }
   Prev() {
     const { prev } = this.state;
+    if(!prev){
+      return false;
+    }
+    const srule = getUrlParameter(this.props.location.search,'srule',false)
+    const searchTerm = getUrlParameter(this.props.location.search,'searchTerm',false)
     const params = parseIdFromUrl(prev);
     fetchData(params.limit, params.offset).then(data => {
       this.setState({
@@ -124,6 +142,13 @@ class SearchContent extends React.Component {
         prev: data.previous,
         count: data.count
       })
+    }).then(() => {
+      if(searchTerm){
+        this.updateDataOnSearch(searchTerm)
+      }
+      if(srule){
+        this.updateDataOnSort(srule);
+      }
     });
   }
   componentDidMount() {
@@ -166,8 +191,8 @@ class SearchContent extends React.Component {
           </div>
           <NextPrev Next={this.Next} Prev={this.Prev} />
         </div>
-        <strong>Count : {count}</strong>
-        <CardList pokemons={pokemons} />
+        <strong className="count">Count : {count}</strong>
+        {pokemons .length >0 ?<CardList pokemons={pokemons} />:'No More results'}
         <NextPrev Next={this.Next} Prev={this.Prev} isNextEnable={next} isPrevDisable={prev} />
       </div>
     </div>

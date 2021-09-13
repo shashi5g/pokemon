@@ -71,10 +71,11 @@ a {
     }
     .info {
         display: flex;
-        flex-direction: revert;
+        flex-direction: column;
         width: 100%;
         margin-top: 10px;
-        justify-content: space-around;
+        justify-content: space-between;
+        text-align: center;
     }
     .image-tile .pokemon-info{
         padding: 0;

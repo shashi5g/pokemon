@@ -92,10 +92,18 @@ class Content extends React.Component {
         prev: data.previous,
         count: data.count
       })
+    }).then(()=>{
+      const qstring = this.props.history.location.search;
+      const srule = getUrlParameter(qstring,'srule',false);
+  
+      this.sortingUpdate(srule)
     });
   }
   Prev() {
     const { prev } = this.state;
+    if(!prev){
+      return false;
+    }
     const params = parseIdFromUrl(prev);
     fetchData(params.limit, params.offset).then(data => {
       this.setState({
@@ -104,6 +112,11 @@ class Content extends React.Component {
         prev: data.previous,
         count: data.count
       })
+    }).then(()=>{
+      const qstring = this.props.history.location.search;
+      const srule = getUrlParameter(qstring,'srule',false);
+  
+      this.sortingUpdate(srule)
     });
   }
   componentDidMount() {
@@ -134,7 +147,7 @@ class Content extends React.Component {
       <div className="main">
         <div className="user-activity">
           <div className="pageSize">
-            <strong>Select page size</strong>
+            <strong >Select page size</strong>
             <SelectPageSize pageSize={pageSize} handleSize={this.handleChange} />
           </div>
           <div className="sorting">
@@ -142,8 +155,8 @@ class Content extends React.Component {
           </div>
           <NextPrev Next={this.Next} Prev={this.Prev} />
         </div>
-        <strong>Count : {count}</strong>
-        <CardList pokemons={pokemons} />
+        <strong className="count">Count : {count}</strong>
+        {pokemons .length >0 ?<CardList pokemons={pokemons} />:'No More results'}
         <NextPrev Next={this.Next} Prev={this.Prev} isNextEnable={next} isPrevDisable={prev} />
       </div>
     </div>
