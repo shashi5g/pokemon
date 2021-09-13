@@ -7,7 +7,7 @@ http://localhost:3000/
 # pokemon details
 http://localhost:3000/details/id
 
-# for  example :
+ for  example :
 http://localhost:3000/details/6
 http://localhost:3000/details/9
 http://localhost:3000/details/10
