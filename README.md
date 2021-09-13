@@ -1,3 +1,31 @@
+
+# unit test cases are remaining
+
+# Home page 
+http://localhost:3000/
+
+# pokemon details
+http://localhost:3000/details/id
+
+ for  example :
+http://localhost:3000/details/6
+http://localhost:3000/details/9
+http://localhost:3000/details/10
+
+# Search page. with  search text :
+
+http://localhost:3000/search?searchTerm=Blaze&srule=weight
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
